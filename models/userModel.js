@@ -1,28 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const reminderManagement = new mongoose.Schema({
-	userWantReminders: {
-		type: Boolean,
-		default: false
-	},
-	automaticOscillation: {
-		type: Boolean,
-		default: false
-	},
-	snooze: {
-		type: Number,
-		enum: [5, 10, 15, 20, 30]
-	},
-	sound: {
-		type: Number,
-		enum: [1, 2, 3, 4, 5, 6, 7, 8, 9]
-	},
-	PreTaskReminder: {
-		type: Number,
-		enum: [0, 2, 5, 10, 15]
-	}
-})
 const medicineSchema = new mongoose.Schema({
 	apiId: {
 		type: String,
@@ -52,9 +30,32 @@ const medicineSchema = new mongoose.Schema({
 		type: Boolean,
 		default: false
 	}
+});
+
+const reminderManagementSchema = new Schema({
+	userWantReminders: {
+		type: Boolean,
+		default: false
+	},
+	automaticOscillation: {
+		type: Boolean,
+		default: false
+	},
+	snooze: {
+		type: Number,
+		enum: [5, 10, 15, 20, 30]
+	},
+	sound: {
+		type: Number,
+		enum: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+	},
+	PreTaskReminder: {
+		type: Number,
+		enum: [0, 2, 5, 10, 15]
+	}
 })
 
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
 	firstName: {
 		type: String,
 		minlength: 2
@@ -96,7 +97,7 @@ const userSchema = new Schema({
 	},
 	medicines: [medicineSchema],
 	reminderManagement: {
-		type: reminderManagement
+		type: reminderManagementSchema
 	}
-});
+}, { timestamps: true });
 module.exports = mongoose.model('user', userSchema);
